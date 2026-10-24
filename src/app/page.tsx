@@ -1,8 +1,10 @@
 import Link from "next/link";
-import { ArrowRight, BookOpen, Code2, FlaskConical, Lightbulb, Search } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight, BookOpen, Search } from "lucide-react";
 import { ProjectCard } from "@/components/ProjectCard";
 import { getProjects } from "@/lib/projects";
 import { PROJECT_CATEGORIES } from "@/lib/projects/constants";
+import studentsImage from "./students-image.png";
 
 export default async function Home() {
   const { projects, configured, available } = await getProjects({ limit: 6 });
@@ -20,12 +22,7 @@ export default async function Home() {
           </div>
         </div>
         <div className="intro-index" aria-label="Explore project disciplines">
-          <div className="index-topline"><span>OPEN INDEX</span><span>01 / 04</span></div>
-          <Link href="/explore?category=School%20project"><BookOpen size={18} aria-hidden="true" /><span>School projects</span><ArrowRight size={15} aria-hidden="true" /></Link>
-          <Link href="/explore?category=Programming"><Code2 size={18} aria-hidden="true" /><span>Programming</span><ArrowRight size={15} aria-hidden="true" /></Link>
-          <Link href="/explore?category=Research"><FlaskConical size={18} aria-hidden="true" /><span>Research</span><ArrowRight size={15} aria-hidden="true" /></Link>
-          <Link href="/explore?category=Other"><Lightbulb size={18} aria-hidden="true" /><span>Ideas &amp; more</span><ArrowRight size={15} aria-hidden="true" /></Link>
-          <span className="index-note">A shared library, made by the community.</span>
+          <Image src={studentsImage} alt="Students sharing projects" style={{ width: "400%", height: "auto" }} />
         </div>
       </section>
 
