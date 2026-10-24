@@ -38,6 +38,18 @@ export function SiteHeader() {
     };
   }, []);
 
+  useEffect(() => {
+    const supabase = createSupabaseBrowserClient();
+    if (!supabase) return;
+    let mounted = true;
+    supabase.auth.getUser().then(({ data }) => {
+      if (mounted) setUser(data.user ?? null);
+    });
+    return () => {
+      mounted = false;
+    };
+  }, [pathname]);
+
   const isActive = (href: string) => {
     if (href.startsWith("/#")) return false;
     if (href === "/") return pathname === "/";
