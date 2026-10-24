@@ -6,6 +6,7 @@ import "./globals.css";
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
   title: { default: "Commonplace | Community Project Sharing", template: "%s | Commonplace" },
   description: "A community library for useful school, programming, and research projects.",
 };

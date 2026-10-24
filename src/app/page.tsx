@@ -22,7 +22,7 @@ export default async function Home() {
           </div>
         </div>
         <div className="intro-index" aria-label="Explore project disciplines">
-          <Image src={studentsImage} alt="Students sharing projects" style={{ width: "400%", height: "auto" }} />
+          <Image src={studentsImage} alt="Students sharing projects" sizes="100vw" style={{ width: "250%", height: "auto" }} />
         </div>
       </section>
 

@@ -30,7 +30,8 @@
 @theme inline { --color-background: var(--paper); --color-foreground: var(--ink); --font-sans: var(--font-geist); }
 * { box-sizing: border-box; }
 html { min-height: 100%; scroll-behavior: smooth; }
-body { min-height: 100vh; margin: 0; color: var(--ink); background: var(--paper); font-family: var(--font-body); font-size: 15px; line-height: 1.55; }
+body { min-height: 100vh; margin: 0; color: var(--ink); background: var(--paper); font-family: var(--font-body); font-size: 15px; line-height: 1.55; display: flex; flex-direction: column; }
+main { flex: 1; }
 a { color: inherit; text-decoration: none; }
 button, input, textarea, select { font: inherit; }
 button, a, input, textarea, select { -webkit-tap-highlight-color: transparent; }
@@ -250,8 +251,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .simple-project-main { min-width: 0; display: flex; align-items: center; justify-content: space-between; gap: 14px; grid-column: 1 / 3; color: var(--ink); }
 .simple-project-row > a:first-child:not(.simple-project-main) { grid-column: 1 / 2; }
 .simple-project-row > span:first-child, .simple-project-main > span:first-child { min-width: 0; display: grid; gap: 4px; }
-.simple-project-row strong { overflow: hidden; font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
-.simple-project-row small { color: var(--muted); font-size: 10px; }
+.simple-project-row strong { overflow: hidden; font-size: 15px; text-overflow: ellipsis; white-space: nowrap; }
+.simple-project-row small { color: var(--muted); font-size: 12px; }
 .simple-project-row > a:hover strong { color: var(--green); }
 .row-edit-link, .row-delete-link { border: 0; color: var(--green); background: transparent; font-size: 11px; font-weight: 600; text-align: center; cursor: pointer; }
 .row-delete-link, .danger-button { color: #a34e3c; }
@@ -461,3 +462,5 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 @media (prefers-reduced-motion: reduce) {
   .theme-toggle, .mobile-menu-toggle > span, .mobile-nav-panel { transition: none; }
 }
+
+:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }

@@ -21,6 +21,21 @@ function signatureIsValid(extension: string, bytes: Uint8Array) {
   return false;
 }
 
+const uploadRateLimit = new Map<string, number[]>();
+
+function isRateLimited(key: string) {
+  const now = Date.now();
+  const windowMs = 60_000;
+  const maxRequests = 10;
+  const timestamps = (uploadRateLimit.get(key) ?? []).filter((time) => now - time < windowMs);
+  if (timestamps.length >= maxRequests) {
+    uploadRateLimit.set(key, timestamps);
+    return true;
+  }
+  timestamps.push(now);
+  uploadRateLimit.set(key, timestamps);
+  return false;
+}
 function safeFilename(name: string) {
   return name.normalize("NFKD").replace(/[^a-zA-Z0-9._-]/g, "-").replace(/-+/g, "-").slice(-100) || "upload";
 }
@@ -41,6 +56,7 @@ export async function POST(request: NextRequest) {
   }
   const file = formData.get("file");
   const kind = formData.get("kind");
+  if (isRateLimited(user.id)) return NextResponse.json({ error: "Too many uploads. Try again later." }, { status: 429 });
   if (!(file instanceof File) || (kind !== "project" && kind !== "thumbnail")) return NextResponse.json({ error: "Choose a valid file." }, { status: 400 });
 
   const extension = file.name.split(".").pop()?.toLowerCase() ?? "";
