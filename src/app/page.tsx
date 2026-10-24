@@ -33,7 +33,6 @@ export default async function Home() {
         <div className="page-width">
           <div className="section-heading">
             <div><p className="eyebrow">THE PROJECT LIBRARY</p><h2 id="recent-heading">Recently shared</h2></div>
-            <Link className="text-link" href="/explore">Browse all projects <ArrowRight size={15} aria-hidden="true" /></Link>
           </div>
           <form action="/explore" className="home-search">
             <Search size={19} aria-hidden="true" />
