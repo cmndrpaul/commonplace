@@ -1,4 +1,5 @@
 import "server-only";
+import { cache } from "react";
 import { createServerSupabaseClient, getSupabasePublicConfig } from "@/lib/supabase/server";
 import type { ProjectCategory } from "@/lib/projects/constants";
 import { PROJECT_CATEGORIES } from "@/lib/projects/constants";
@@ -47,22 +48,18 @@ export async function getProjects(options: { query?: string; category?: string; 
   return { configured, available: true, projects, totalCount: count ?? projects.length };
 }
 
-export async function getProjectDetails(projectId: string) {
+export const getProjectDetails = cache(async (projectId: string) => {
   const supabase = await createServerSupabaseClient();
   if (!supabase) return null;
-  const { data: project } = await supabase.from("projects").select("id, user_id, title, description, category, status, thumbnail_path, file_path, project_url, created_at").eq("id", projectId).maybeSingle();
-  if (!project) return null;
-
-  const [{ data: profile }, { data: likeCount }, { data: comments }, { data: { user } }] = await Promise.all([
-    supabase.from("profiles").select("id, username, display_name").eq("id", project.user_id).maybeSingle(),
-    supabase.from("project_like_counts").select("like_count").eq("project_id", projectId).maybeSingle(),
-    supabase.from("comments").select("id, user_id, body, created_at").eq("project_id", projectId).order("created_at", { ascending: false }).limit(50),
+  const [{ data: project }, { data: comments }, { data: { user } }] = await Promise.all([
+    supabase.from("projects").select("id, user_id, title, description, category, status, thumbnail_path, file_path, project_url, created_at, author:profiles!projects_user_id_fkey(username, display_name)").eq("id", projectId).maybeSingle(),
+    supabase.from("comments").select("id, user_id, body, created_at, author:profiles!comments_user_id_fkey(username, display_name)").eq("project_id", projectId).order("created_at", { ascending: false }).limit(50),
     supabase.auth.getUser(),
   ]);
-  const commentUserIds = [...new Set(comments?.map((comment) => comment.user_id) ?? [])];
-  const { data: commentProfiles } = commentUserIds.length ? await supabase.from("profiles").select("id, username, display_name").in("id", commentUserIds) : { data: [] };
-  const commentNames = new Map(commentProfiles?.map((item) => [item.id, item.display_name || item.username]) ?? []);
-  const [{ data: thumbnail }, { data: download }, { data: liked }, { data: bookmarked }] = await Promise.all([
+  if (!project) return null;
+
+  const [{ data: likeCount }, { data: thumbnail }, { data: download }, { data: liked }, { data: bookmarked }] = await Promise.all([
+    supabase.from("project_like_counts").select("like_count").eq("project_id", projectId).maybeSingle(),
     project.thumbnail_path ? supabase.storage.from("project-assets").createSignedUrl(project.thumbnail_path, 600) : Promise.resolve({ data: null }),
     project.file_path ? supabase.storage.from("project-assets").createSignedUrl(project.file_path, 300) : Promise.resolve({ data: null }),
     user ? supabase.from("likes").select("id").eq("project_id", projectId).eq("user_id", user.id).maybeSingle() : Promise.resolve({ data: null }),
@@ -71,7 +68,7 @@ export async function getProjectDetails(projectId: string) {
 
   return {
     project,
-    author: { name: profile?.display_name ?? "Community member", username: profile?.username ?? null },
+    author: { name: project.author?.display_name ?? "Community member", username: project.author?.username ?? null },
     thumbnailUrl: thumbnail?.signedUrl ?? null,
     downloadUrl: download?.signedUrl ?? null,
     likeCount: likeCount?.like_count ?? 0,
@@ -79,6 +76,6 @@ export async function getProjectDetails(projectId: string) {
     bookmarked: Boolean(bookmarked),
     isOwner: user?.id === project.user_id,
     viewerId: user?.id ?? null,
-    comments: comments?.map((comment) => ({ ...comment, authorName: commentNames.get(comment.user_id) ?? "Community member" })) ?? [],
+    comments: comments?.map((comment) => ({ ...comment, authorName: comment.author?.display_name || comment.author?.username || "Community member" })) ?? [],
   };
-}
+});

@@ -229,6 +229,23 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .status-draft { color: #84613f; background: #f8f1e5; }
 .dashboard-empty { margin-top: 12px; }
 .detail-page { max-width: 970px; }
+.loading-page { animation: loading-appear .12s ease-out; }
+.skeleton { position: relative; overflow: hidden; border-radius: 5px; background: #e9efeb; }
+.skeleton::after { position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, #ffffffa8, transparent); content: ""; animation: skeleton-shimmer 1.25s ease-in-out infinite; }
+.skeleton-back { width: 120px; height: 16px; margin-bottom: 28px; }
+.loading-heading { margin-bottom: 24px; }
+.skeleton-tag { width: 110px; height: 23px; margin-bottom: 13px; }
+.skeleton-title { width: min(430px, 82%); height: 48px; }
+.skeleton-byline { width: min(250px, 70%); height: 16px; margin-top: 13px; }
+.skeleton-hero { height: 400px; }
+.loading-content { display: grid; grid-template-columns: minmax(0, 1fr) 230px; gap: 55px; padding-top: 38px; }
+.skeleton-subtitle { width: 200px; height: 26px; margin-bottom: 17px; }
+.skeleton-line { width: 100%; height: 14px; margin-bottom: 10px; }
+.skeleton-line-short { width: 62%; }
+.skeleton-author { height: 82px; }
+@keyframes skeleton-shimmer { to { transform: translateX(100%); } }
+@keyframes loading-appear { from { opacity: .6; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .skeleton::after, .loading-page { animation: none; } }
 .detail-page > .back-link { margin-bottom: 26px; }
 .detail-heading { display: flex; align-items: end; justify-content: space-between; gap: 22px; margin-bottom: 25px; }
 .detail-category { position: static; display: inline-block; margin-bottom: 12px; border-color: #d6e4dc; background: #edf5f0; }
@@ -299,6 +316,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .detail-heading h1 { font-size: 38px; }
   .detail-actions { justify-content: start; }
   .detail-image { height: 300px; }
+  .skeleton-hero { height: 300px; }
   .detail-content-grid { grid-template-columns: 1fr; gap: 25px; padding-block: 27px 35px; }
   .author-aside { max-width: none; }
 }
@@ -318,6 +336,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .row-edit-link, .simple-project-row form { grid-row: 2; }
   .detail-heading h1 { font-size: 34px; }
   .detail-image { height: 230px; }
+  .skeleton-hero { height: 230px; }
   .profile-intro { grid-template-columns: 54px 1fr; gap: 13px; }
   .profile-avatar { width: 52px; height: 52px; border-radius: 17px 17px 17px 5px; font-size: 24px; }
   .profile-intro h1 { font-size: 32px; }
