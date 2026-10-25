@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, BookOpen, Search } from "lucide-react";
+import { ArrowRight, BookOpen } from "lucide-react";
 import { ProjectCard } from "@/components/ProjectCard";
 import { getProjects } from "@/lib/projects";
 import { PROJECT_CATEGORIES } from "@/lib/projects/constants";
@@ -31,12 +31,6 @@ export default async function Home() {
           <div className="section-heading">
             <div><p className="eyebrow">THE PROJECT LIBRARY</p><h2 id="recent-heading">Recently shared</h2></div>
           </div>
-          <form action="/explore" className="home-search">
-            <Search size={19} aria-hidden="true" />
-            <label className="visually-hidden" htmlFor="home-search">Search projects</label>
-            <input id="home-search" name="q" placeholder="Search projects, topics, or ideas" />
-            <button className="button button-primary" type="submit">Search</button>
-          </form>
           <div className="category-row" aria-label="Browse by category">
             {PROJECT_CATEGORIES.map((category) => <Link className="category-chip" href={`/explore?category=${encodeURIComponent(category)}`} key={category}>{category}</Link>)}
           </div>

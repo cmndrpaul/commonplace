@@ -61,7 +61,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .mobile-header-controls { display: none; }
 .theme-toggle { width: 36px; height: 36px; flex: 0 0 auto; display: inline-grid; place-items: center; padding: 0; border: 0; border-radius: 6px; color: var(--ink); background: var(--surface); cursor: pointer; transition: color .18s ease, background .18s ease, transform .18s ease; }
 .theme-toggle:hover { transform: translateY(-1px); color: var(--green); background: var(--soft); }
-.mobile-login-button { min-height: 36px; display: inline-flex; align-items: center; justify-content: center; padding: 0 15px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink); background: var(--surface); font-size: 12px; font-weight: 600; transition: color .18s ease, background .18s ease, border-color .18s ease; }
+.mobile-login-button { min-height: 36px; display: inline-flex; align-items: center; justify-content: center; padding: 0 15px; border: 1px solid var(--line); border-radius: 6px; color: var(--ink); background: var(--surface); font-size: 12px; font-weight: 600; transition: color .18s ease, background .18s ease, border-color .18s ease; }
 .mobile-login-button:hover { border-color: var(--green); color: var(--green); background: var(--soft); }
 .home-intro { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(300px, .72fr); gap: 90px; align-items: center; padding-block: 76px 82px; }
 .intro-copy { max-width: 670px; }
@@ -114,7 +114,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .how-heading h2 { max-width: 310px; font-size: 30px; }
 .how-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
 .how-steps > div { padding-top: 6px; border-top: 1px solid #cbd9d2; }
-.how-steps > div > span { color: var(--coral); font-size: 11px; font-weight: 700; }
+.how-steps > div > span { color: var(--green); font-size: 11px; font-weight: 700; }
 .how-steps h3 { margin: 14px 0 6px; font-size: 14px; font-weight: 650; }
 .how-steps p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.7; }
 .site-footer { border-top: 1px solid var(--line); background: #fff; }

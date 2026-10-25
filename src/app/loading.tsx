@@ -1,3 +1,5 @@
 export default function Loading() {
-  return <div className="page-width" style={{ padding: "2rem 0" }}>Loading…</div>;
+  return (
+    <div style={{ position: "fixed", top: 0, left: 0, right: 0, height: 3, background: "var(--green)", zIndex: 10 }} />
+  );
 }
