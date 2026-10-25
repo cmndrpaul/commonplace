@@ -11,15 +11,7 @@ import type { User } from "@supabase/supabase-js";
 
 export function SiteHeader() {
   const pathname = usePathname();
-  const [hash, setHash] = useState("");
   const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    const updateHash = () => setHash(window.location.hash);
-    updateHash();
-    window.addEventListener("hashchange", updateHash);
-    return () => window.removeEventListener("hashchange", updateHash);
-  }, []);
 
   useEffect(() => {
     const supabase = createSupabaseBrowserClient();
@@ -59,7 +51,7 @@ export function SiteHeader() {
     <header className="site-header">
       <div className="page-width header-inner">
         <Link className="wordmark" href="/" aria-label="Commonplace home"><span className="brand-symbol" aria-hidden="true">c</span><span>commonplace<span className="brand-period">.</span></span></Link>
-        <nav className="desktop-nav" aria-label="Main navigation"><Link href="/explore" className={isActive("/explore") ? "active" : undefined}>Explore</Link><Link href="/#categories" className={pathname === "/" && hash === "#categories" ? "active" : undefined}>Categories</Link></nav>
+        <nav className="desktop-nav" aria-label="Main navigation"><Link href="/explore" className={isActive("/explore") ? "active" : undefined}>Explore</Link></nav>
         <form action="/explore" className="header-search"><Search size={16} aria-hidden="true" /><label className="visually-hidden" htmlFor="nav-search">Search projects</label><input id="nav-search" name="q" placeholder="Search projects" /></form>
         <div className="header-actions desktop-header-actions">
           

@@ -45,7 +45,6 @@ export function MobileNavigation({ isLoggedIn }: { isLoggedIn: boolean }) {
         <div className="mobile-nav-links">
           <Link href="/" onClick={closeMenu}>Home</Link>
           <Link href="/explore" onClick={closeMenu}>Explore</Link>
-          <Link href="/#categories" onClick={closeMenu}>Categories</Link>
           {isLoggedIn ? <Link href="/projects/new" onClick={closeMenu}>Create project</Link> : <Link className="mobile-nav-join" href="/auth/register" onClick={closeMenu}>Join the Community</Link>}
           {isLoggedIn && <form action={signOut}><button className="mobile-nav-link" type="submit">Log out</button></form>}
         </div>
